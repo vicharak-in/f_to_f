@@ -55,10 +55,28 @@ This conversion transforms a fixed-point integer and fraction into a floating-po
 
   
 ##### Example
+
+**Input Details**  
+- **Decimal Value:** `28.6528`  
+- **Integer Part:** `28` → Hex: `00 1c`  
+- **Fractional Part:** `0.6528` → Hex: `a7 90`
+
+The input data is structured as follows:
 ```sh
-Input  packet: 88 41 e0 53 c8 00
-Output packet: 88 00 1C 0a 79 00
+Input  packet: 88 00 1c a7 90 00 
 ```
+- `88` → Header/Identifier(application,size & packet)  
+- `00 1c` → Integer representation (`28`)  
+- `a7 90` → Fractional representation (`0.6528`)  
+- `00` → **Reserved**
+
+The output data packet is structured as follows:
+```sh
+Output Packet: 88 41 E5 3C 80 00
+```
+- `88` → Header/Identifier(application,size & packet) 
+- `41 e5 3c 80` → Floating-point representation of `28.6528`  
+- `00` → **Reserved**
 
 #### **Size 2**
 
@@ -83,11 +101,12 @@ Output packet: 88 00 1C 0a 79 00
   - Data Packet 2: 3 bytes (floating point), 1 byte (reserved)
   
 ##### Example
+
 ```sh
 Input  packet1: 91 00 00 00 1c 00
-Input  packet2: 92 00 00 0a 79 00
-Output packet1: 91 40 3c 00 00 0a
-Output packet2: 92 79 00 00 00 00
+Input  packet2: 92 a7 90 00 00 00
+Output packet1: 91 40 3c a7 90 00 
+Output packet2: 92 00 00 00 00 00
 ```
 
 #### **Size 3**
@@ -113,11 +132,12 @@ Output packet2: 92 79 00 00 00 00
   - Data Packet 2: 5 bytes (floating point)
 
 ##### Example
+
 ```sh
 Input  packet1: 99 00 00 00 00 1C
-Input  packet2: 9a 00 00 00 0a 79
-Output packet1: 99 40 03 c0 00 00
-Output packet2: 9a 00 a7 90 00 00
+Input  packet2: 9a a7 90 00 00 00
+Output packet1: 99 40 03 ca 79 00
+Output packet2: 9a 00 00 00 00 00
 ```
 
 ---
@@ -147,10 +167,28 @@ This conversion transforms a floating-point number into its fixed-point integer 
   - Data: 2 bytes (integer), 2 bytes (fraction), 1 byte (reserved)
 
 ##### Example
+
+**Input Details**  
+- **Floation-point hex value:** `41 e5 3c 80`  
+
+The input data is structured as follows:
 ```sh
-Input  packet: 48 41 e0 53 c8 00
-Output packet: 48 00 1c 0a 79 00
+Input  packet: 48 41 e5 3c 80 00
 ```
+- `48` → Header/Identifier(application,size & packet)  
+- `41 E5 3C 80` → Floating-point representation of `28.6528`  
+- `00` → **Reserved**
+
+The output data packet is structured as follows:
+  
+```sh
+Output packet: 48 00 1c a7 90 00
+```
+
+- `48` → Header/Identifir(application,size & packet) 
+- Integer Part: `00 1c` → Decimal: `28`  
+- Fractional Part: `a7 90` → Decimal: `0.6528`  
+- `00` → **Reserved**
 
 #### **Size 2**
     
@@ -175,11 +213,12 @@ Output packet: 48 00 1c 0a 79 00
   - Data Packet 2: 4 bytes (fraction), 1 byte (reserved)
 
 ##### Example
+
 ```sh
-Input  packet1: 51 40 3c 00 00 0a
-Input  packet2: 52 79 00 00 00 00
+Input  packet1: 51 40 3c a7 90 00
+Input  packet2: 52 00 00 00 00 00
 Output packet1: 51 00 00 00 1c 00
-Output packet2: 52 00 00 0a 79 00
+Output packet2: 52 a7 90 00 00 00 
 ```
 
 #### **Size 3**
@@ -205,11 +244,12 @@ Output packet2: 52 00 00 0a 79 00
   - Data Packet 2: 5 bytes (fraction)
 
 ##### Example
+
 ```sh
-Input  packet1: 59 40 03 c0 00 00
-Input  packet2: 5a 00 a7 90 00 00
+Input  packet1: 59 40 03 ca 79 00
+Input  packet2: 5a 00 00 00 00 00
 Output packet1: 59 00 00 00 00 1C
-Output packet2: 5a 00 00 00 0a 79
+Output packet2: 5a a7 90 00 00 00 
 ```
 
 
